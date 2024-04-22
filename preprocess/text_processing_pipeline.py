@@ -8,13 +8,14 @@ def text_formatter(text: str) -> str:
 
     # Other potential text formatting functions can go here
     return cleaned_text
-def split_to_sentences(sentence_list:list):
+def split_to_sentences(info_dict:dict):
     nlp = English()
     nlp.add_pipe("sentencizer")
-    sentences = list(nlp(sentence_list).sents)
-    sentences = [str(sentence) for sentence in sentences]
-    sentence_count = len(sentences)
-    return sentences, sentence_count
+    for item in tqdm(pages_and_texts):
+        item['sentences'] = list(nlp(item['text']).sents)
+        item['sentences'] = [str(sentence) for sentence in item['sentences']]
+
+        item['page_sentence_count_'] = len(item['sentences'])
 # Open PDF and get lines/pages
 # Note: this only focuses on text, rather than images/figures etc
 def open_and_read_pdf(pdf_path: str) -> list[dict]:
