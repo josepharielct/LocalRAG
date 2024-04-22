@@ -1,1 +1,1 @@
-from .embedding_pipeline import create_embeddings
+from .embedding_pipeline import create_embeddings,semantic_search

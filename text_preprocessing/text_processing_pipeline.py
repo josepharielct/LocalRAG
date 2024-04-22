@@ -62,29 +62,31 @@ def open_and_read_pdf(pdf_path: str,page_start:int):
     return pages_and_texts
 
 def get_token_count_threshold(info_dict:list[dict],threshold:int):
-    token_count = []
-    for item in tqdm(info_dict):
-        for sentence_chunk in item['sentence_chunks']:
-            joined_sentence_chunk = "".join(sentence_chunk).replace(" ", " ").strip()
-            joined_sentence_chunk = re.sub(r"\.([A-Z])",r'. \1', joined_sentence_chunk)
-            token_count.append(len(joined_sentence_chunk) / 4)
-    return np.percentile(token_count,threshold)
+    return None
+#     token_count = []
+#     for item in tqdm(info_dict):
+#         for sentence_chunk in item['sentence_chunks']:
+#             joined_sentence_chunk = "".join(sentence_chunk).replace(" ", " ").strip()
+#             joined_sentence_chunk = re.sub(r"\.([A-Z])",r'. \1', joined_sentence_chunk)
+#             token_count.append(len(joined_sentence_chunk) / 4)
+#     return np.percentile(token_count,threshold)
 
 
 def get_ideal_chunk_size(info_dict: dict, initial_chunk_size: int, token_size_limit: int, token_threshold: int):
-    copy_dict = info_dict.copy()
-    current_size = initial_chunk_size
-    chunkify(copy_dict, current_size)
-    token_size_in_threshold = get_token_count_threshold(copy_dict,token_threshold)
+    return None
+#     copy_dict = info_dict.copy()
+#     current_size = initial_chunk_size
+#     chunkify(copy_dict, current_size)
+#     token_size_in_threshold = get_token_count_threshold(copy_dict,token_threshold)
 
-    while token_size_in_threshold > token_size_limit:
-        current_size -= 1
-        copy_dict = info_dict.copy()
-        chunkify(copy_dict, current_size)
-        token_size_in_threshold = get_token_count_threshold(copy_dict, token_threshold)
-        print(f"current_size: {current_size}, current_max_token_size: {token_size_in_threshold}")
+#     while token_size_in_threshold > token_size_limit:
+#         current_size -= 1
+#         copy_dict = info_dict.copy()
+#         chunkify(copy_dict, current_size)
+#         token_size_in_threshold = get_token_count_threshold(copy_dict, token_threshold)
+#         print(f"current_size: {current_size}, current_max_token_size: {token_size_in_threshold}")
 
-    return current_size
+#     return current_size
 
 
 def filter_chunks_lower_bound(chunk_dict:list[dict], min_token_length:int):
