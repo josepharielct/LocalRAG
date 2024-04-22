@@ -1,0 +1,1 @@
+from .embedding_pipeline import create_embeddings
