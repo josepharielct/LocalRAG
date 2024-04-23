@@ -13,7 +13,7 @@ def create_embeddings(chunk_dict:list[dict], model:str, save_path:str, batch_siz
     for item in tqdm(chunk_dict):
         item['embedding'] = embedding_model.encode(item['sentence_chunk'],
                                                    batch_size=batch_size,
-                                                   convert_to_tensor=False)
+                                                   convert_to_tensor=True)
     text_chunk_embeddings = pd.DataFrame(chunk_dict)
     embeddings_df_save_path = save_path
     text_chunk_embeddings.to_csv(embeddings_df_save_path, index=False)
