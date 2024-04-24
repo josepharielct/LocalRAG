@@ -9,7 +9,7 @@ This project is a Local Retrieval Augmented Generation (RAG) pipeline built from
 ## Screenshot
 <img src="assets/screenshot.jpg"/>
 
-## Gif (oiginal Size)
+## Gif (original Size)
 <img src='assets/demo_orig_size.gif'/>
 
 ## Gif (compressed due to large size of original file)
