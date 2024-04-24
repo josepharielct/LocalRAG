@@ -57,7 +57,7 @@ def generate_llm():
 
 
 # Augmenting prompt with context items
-def prompt_formatter(query: str, context_items: list[dict], tokenizer)-> str:
+def format_prompt(query: str, context_items: list[dict], tokenizer)-> str:
     context = "- " + "\n- ".join([item["sentence_chunk"] for item in context_items])
     base_prompt = """Based on the following context items, please answer the query.
                     Give yourself room to think by extracting relevant passages from the context before answering the query.
@@ -100,49 +100,29 @@ def ask(query: str,
         format_answer_text=True,
         return_answer_only=True,
         ):
-    """
-    Takes a query, finds relevant resources/context and generates an answer to the query based on the relevant resources.
-    """
-    # RETRIEVAL
-    # Get just the scores and indices of top related results
     scores, indices = retrieve_resources(query=query,
                                          top_k=5,
                                          source_embedding=embeddings,
                                          model=embedding_model,
                                          )
 
-    # Create a list of context items
     context_items = [pages_and_chunks[i] for i in indices] 
 
-    # Add score to context item
     for i, item in enumerate(context_items): 
         item["score"] = scores[i].cpu()
 
-    # AUGMENTATION
-    # Create the prompt and format it with context items
-    prompt = prompt_formatter(query=query,
+    prompt = format_prompt(query=query,
                               context_items=context_items,
                               tokenizer=tokenizer)
 
-    # GENERATION
-    # Tokenize the prompt
     input_ids = tokenizer(prompt, return_tensors="pt").to("cuda")
-
-    # Generate an output of tokens
     outputs = llm_model.generate(**input_ids,
                                  temperature=temperature,
                                  do_sample=True,
                                  max_new_tokens=max_new_tokens)
-
-    # Decode the tokens into text
     output_text = tokenizer.decode(outputs[0])
-
-    # Format the answer
     if format_answer_text:
-        # Replace prompt and special tokens
         output_text = output_text.replace(prompt, "").replace("<bos>", "").replace("<eos>", "")
-
-    # Only return the answer without context items
     if return_answer_only:
         return output_text
 
