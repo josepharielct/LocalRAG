@@ -3,29 +3,26 @@ from transformers.utils import is_flash_attn_2_available
 from transformers import BitsAndBytesConfig
 import torch 
 from embeddings import retrieve_resources
+
 def get_model_and_config_for_device():
     gpu_memory_bytes = torch.cuda.get_device_properties(0).total_memory
     gpu_memory_gb = round(gpu_memory_bytes / (2**30))
     print(f"Available GPU memory: {gpu_memory_gb} GB")
     if gpu_memory_gb < 5.1:
-        print(f"Your available GPU memory is {gpu_memory_gb}GB, you may not have enough memory to run a Gemma LLM locally without quantization.")
+        print('not enough gpu memory to run gemma locally')
     elif gpu_memory_gb < 8.1:
-        print(f"GPU memory: {gpu_memory_gb} | Recommended model: Gemma 2B in 4-bit precision.")
         use_quantization_config = True 
         model_id = "google/gemma-2b-it"
     elif gpu_memory_gb < 19.0:
-        print(f"GPU memory: {gpu_memory_gb} | Recommended model: Gemma 2B in float16 or Gemma 7B in 4-bit precision.")
         use_quantization_config = False 
         model_id = "google/gemma-2b-it"
     elif gpu_memory_gb > 19.0:
-        print(f"GPU memory: {gpu_memory_gb} | Recommend model: Gemma 7B in 4-bit or float16 precision.")
         use_quantization_config = False 
         model_id = "google/gemma-7b-it"
 
-    print(f"use_quantization_config set to: {use_quantization_config}")
-    print(f"model_id set to: {model_id}")
+    print(f"use_quantization_config: {use_quantization_config}")
+    print(f"model_id: {model_id}")
     return use_quantization_config, model_id
-
 
 def get_quant_config():
     quantization_config = BitsAndBytesConfig(load_in_4bit=True,
@@ -56,7 +53,6 @@ def generate_llm():
     return tokenizer,llm_model
 
 
-# Augmenting prompt with context items
 def format_prompt(query: str, context_items: list[dict], tokenizer)-> str:
     context = "- " + "\n- ".join([item["sentence_chunk"] for item in context_items])
     base_prompt = """Based on the following context items, please answer the query.
