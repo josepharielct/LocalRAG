@@ -8,6 +8,7 @@ This project is a Local Retrieval Augmented Generation (RAG) pipeline built from
 # Examples of the chatbot in action
 <img src="assets/demo_1.5x.gif" />
 
+- Note: Video is compressed due to the large size of the original file
 # Requirements
 - PyMuPDF==1.23.26
 - matplotlib==3.8.3
