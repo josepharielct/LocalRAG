@@ -6,9 +6,16 @@ This project is a Local Retrieval Augmented Generation (RAG) pipeline built from
 1. LLM Model: Instruction-tuned Gemma (the specific type varying depending on hardware capabilities)
 
 # Examples of the chatbot in action
+## Screenshot
+<img src="assets/screenshot.jpg"/>
+
+## Gif (oiginal Size)
+<img src='assets/demo_orig_size.gif'/>
+
+## Gif (compressed due to large size of original file)
 <img src="assets/demo_1.5x.gif" />
 
-- Note: Video is compressed due to the large size of the original file
+
 # Requirements
 - PyMuPDF==1.23.26
 - matplotlib==3.8.3
