@@ -47,6 +47,11 @@ Where app.py contains the gradio deployment for this project and main.py runs th
 ## Note
 This projects requires a CUDA-compatible GPU to run
 
+# To-Do
+- [ ] Enable the chatbot to respond using query history as well
+- [ ] Improve text preprocessing to get better RAG performance
+- [ ] Integrate a re-ranker model to get better RAG results
+- [ ] Improve prompt
 
 # Contributions
 1. Many thanks to Daniel Bourke for the video guidance on this project
