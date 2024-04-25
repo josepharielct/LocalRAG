@@ -3,7 +3,7 @@ This project is a Local Retrieval Augmented Generation (RAG) pipeline built from
 
 # Models Used
 1. Embedding Model: all-mpnet-base-v2
-1. LLM Model: Gemma IT (the specific type varying depending on hardware capabilities)
+2. LLM Model: Gemma instruction-tuned (the specific type will be automatically selected depending on hardware capabilities)
 
 # Examples of the chatbot in action
 ## Screenshot
